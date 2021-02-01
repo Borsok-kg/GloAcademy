@@ -4,7 +4,7 @@ let money = 15000,
     deposit = true,
     mission = 2000000,
     period = 12,
-    budgetDay = 45000 / 30;
+    budgetDay = money / 30;
 
 console.log(typeof(money));
 console.log(typeof(income));
