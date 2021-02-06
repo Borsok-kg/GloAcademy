@@ -1,27 +1,52 @@
 'use strict'
 
-let money = +prompt('Ваш месячный доход?'),
+let isNumber = function(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
+let money,
     income = 'Freelance',
     addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую'),
     deposit = confirm('Есть ли у вас депозит в банке?'),
     mission = 200000,
-    period = 12,
-    expenses1 = prompt('Введите обязательную статью расходов?'),
-    amount1 = +prompt('Во сколько это обойдется?'),
-    expenses2 = prompt('Введите обязательную статью расходов?'),
-    amount2 = +prompt('Во сколько это обойдется?');
+    period = 12;
+
+// Проверяем корректность ввода месячной суммы
+let start = function() {
+    do {
+        money = prompt('Ваш месячный доход?'); 
+    } while (!isNumber(money));
+};
+
+start();
 
 // Считаем расходы
-function getExpensesMonth(a, b) {
-    return a + b;
+let expenses = [];
+
+function getExpensesMonth() {
+    let sum = [];
+    for (let i = 0; i < 2; i++) {
+        expenses[i] = prompt('Введите обязательную статью расходов?', 'На что?');
+
+        do {
+            sum[i] = +prompt('Во сколько это обойдется?');
+        } while (!isNumber(sum[i]));
+        
+    
+    }
+
+    console.log(expenses);
+    return sum[0] + sum[1];
 }
+
+let expensesAmount = getExpensesMonth();
 
 // Минусуем расходы от месячного дохода
 function getAccumulatedMonth(a, b) {
     return a - b;
 }
 
-let accumulatedMonth = getAccumulatedMonth(money, getExpensesMonth(amount1, amount2));
+let accumulatedMonth = getAccumulatedMonth(money, expensesAmount);
 
 
 // Высчитываем сколько нужно недель что бы набрать сумму 200000
@@ -41,18 +66,24 @@ showTypeOf(money);
 showTypeOf(income);
 showTypeOf(deposit);
 
-console.log(`Расходы за месяц ${getExpensesMonth(amount1, amount2)}`);
+console.log(`Расходы за месяц ${expensesAmount}`);
 console.log(addExpenses.split(','));
-console.log(`Цель будет достигнута за ${Math.ceil(getTargetMonth(mission, accumulatedMonth))} месяцев(-а)`);
+
+if (Math.ceil(getTargetMonth(mission, accumulatedMonth)) > 0) {
+    console.log(`Цель будет достигнута за ${Math.ceil(getTargetMonth(mission, accumulatedMonth))} месяцев(-а)`);
+} else if (Math.ceil(getTargetMonth(mission, accumulatedMonth)) < 0) {
+    console.log('Цель не будет достигнута');  
+}
+
 console.log(`Бюджет на день ${Math.floor(budgetDay)}`);
 
 // Функция с видео
 let getStatusIncome = function() {
-    if (budgetDay > 1200) {
+    if (budgetDay >= 1200) {
         console.log('У вас высокий уровень дохода');
-    } else if (budgetDay > 600 && budgetDay < 1200) {
+    } else if (budgetDay >= 600 && budgetDay < 1200) {
         console.log('У вас средний уровень дохода');
-    } else if (budgetDay < 600 && budgetDay > 0) {
+    } else if (budgetDay <= 600 && budgetDay > 0) {
         console.log('К сожалению у вас уровень дохода ниже среднего');
     } else {
         console.log('Что то пошло не так');
