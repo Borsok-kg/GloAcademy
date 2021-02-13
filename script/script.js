@@ -39,14 +39,26 @@ let appData = {
                     } while (!isNumber(b));
                 appData.expenses[a] = b;
             }
+
     },
 
-    getBudget: function () {
-        appData.budgetMonth = money - appData.budgetDay;
+    getExpensesMonth: function () {  
+        let sum = 0;
+        for (let key in appData.expenses){
+            
+            sum += appData.expenses[key];
+        }
+        appData.expensesMonth = sum;
+        return sum;
     },
 
-    getTargetMonth: function () {
-        return appData.mission / money;
+    getBudget: function () { 
+        appData.budgetMonth = appData.budget - appData.getExpensesMonth();
+        appData.budgetDay = Math.floor(appData.budgetMonth / 30);
+    },
+
+    getTargetMonth: function(){
+        return  Math.ceil(appData.mission / appData.budgetMonth);
     },
 
     getStatusIncome: function() {
@@ -62,28 +74,24 @@ let appData = {
     }
 };
 
+
+
 appData.asking();
 
-for (let key in appData.expenses) {
-    appData.expensesMonth += appData.expenses[key];
-}
-
-appData.getTargetMonth();
-
-appData.budgetDay = money / 30;
+console.log('Расходы за месяц ', appData.getExpensesMonth());
 
 appData.getBudget();
 
-console.log(`Расходы за месяц ${appData.expensesMonth}`);
+appData.getTargetMonth();
 
-if (Math.ceil(appData.getTargetMonth()) > 0) {
-    console.log(`Цель будет достигнута за ${Math.ceil(appData.getTargetMonth())} месяцев(-а)`);
-} else if (Math.ceil(appData.getTargetMonth()) < 0) {
+if (appData.getTargetMonth() > 0) {
+    console.log(`Цель будет достигнута за ${appData.getTargetMonth()} месяцев(-а)`);
+} else if (appData.getTargetMonth() < 0) {
     console.log('Цель не будет достигнута');  
 }
 
 appData.getStatusIncome();
 
 for (let key in appData) {
-    console.log(`Наша программа включает в себя данные: ${appData[key]}`);
+    console.log(`Наша программа включает в себя данные: ${key} - ${appData[key]}`);
 }
