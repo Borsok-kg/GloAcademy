@@ -42,7 +42,7 @@ let appData = {
     },
 
     getBudget: function () {
-        return money - appData.expensesMonth;
+        appData.budgetMonth = money - appData.budgetDay;
     },
 
     getTargetMonth: function () {
@@ -68,11 +68,11 @@ for (let key in appData.expenses) {
     appData.expensesMonth += appData.expenses[key];
 }
 
-appData.getBudget();
-
 appData.getTargetMonth();
 
-appData.budgetDay = appData.getBudget() / 30;
+appData.budgetDay = money / 30;
+
+appData.getBudget();
 
 console.log(`Расходы за месяц ${appData.expensesMonth}`);
 
