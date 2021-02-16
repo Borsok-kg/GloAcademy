@@ -12,7 +12,7 @@ let isString = function(n) {
 let money,
     start = function() {
         do {
-            money = prompt('Ваш месячный доход?', '20000'); 
+            money = prompt('Ваш месячный доход?', 20000); 
         } while (!isNumber(money));
     };
 
@@ -44,7 +44,7 @@ let appData = {
             } while (isString(itemIncom));
 
             do {
-                cashIncom = prompt('Сколько в месяц вы на этом зарабатываете?', '10000');
+                cashIncom = prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
             } while (!isNumber(cashIncom));
             
             appData.income[itemIncom] = cashIncom;
@@ -70,9 +70,9 @@ let appData = {
                 } while (isString(a));
 
                 do {
-                    b = prompt('Во сколько это обойдется?', '2000');
+                    b = prompt('Во сколько это обойдется?', 2000);
                 } while (!isNumber(b));
-            appData.expenses[a] = b;
+            appData.expenses[a] = Number(b);
         }
     },
 
@@ -110,11 +110,11 @@ let appData = {
     getInfoDeposit: function() {
         if (appData.deposit) {
             do {
-                appData.percentDeposit = +prompt('Какой годовой процент?', '10');
+                appData.percentDeposit = +prompt('Какой годовой процент?', 10);
             } while (!isNumber(appData.percentDeposit));
 
             do {
-                appData.moneyDeposit = +prompt('Какая сумма заложена', '10000');
+                appData.moneyDeposit = +prompt('Какая сумма заложена', 10000);
             } while (!isNumber(appData.moneyDeposit));
         }
     },
