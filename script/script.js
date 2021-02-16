@@ -1,5 +1,35 @@
 'use strict'
 
+const btnStart = document.getElementById('start'),
+      btnPlus = document.getElementsByTagName('button')[0],
+      btnPlus2 = document.getElementsByTagName('button')[1],
+      checkbox = document.querySelector('#deposit-check'),
+      additionalIncome = document.querySelectorAll('.additional_income-item'),
+      resBudgetDay = document.getElementsByClassName('budget_day-value')[0],
+      resExpensesMonth = document.getElementsByClassName('expenses_month-value')[0],
+      resAdditionalIncome = document.getElementsByClassName('additional_income-value')[0],
+      resAdditionalExpenses = document.getElementsByClassName('additional_expenses-value')[0],
+      resIncomePeriod = document.getElementsByClassName('income_period-value')[0],
+      resTargetMonth = document.getElementsByClassName('target_month-value')[0],
+      salary = document.querySelector('.salary-amount'),
+      incomeTitle = document.querySelector('.income-title'),
+      incomeAmount = document.querySelector('.income-amount'),
+      expensesTitle = document.querySelector('.expenses-title'),
+      expensesAmount = document.querySelector('.expenses-amount'),
+      additionalExpenses = document.querySelector('.additional_expenses-item'),
+      depositBankSelect = document.querySelector('.deposit-bank'),
+      depositAmount = document.querySelector('.deposit-amount'),
+      depositPercent = document.querySelector('.deposit-percent'),
+      targetAmount = document.querySelector('.target-amount'),
+      periodSelect = document.querySelector('.period-select'),
+      periodAmount = document.querySelector('.period-amount'),
+      // Про "Доход за месяц" ничего не писали, но все же!
+      resBudgetMonth = document.querySelector('.budget_month-value');
+
+// console.log(btnStart, btnPlus, btnPlus2, checkbox, additionalIncome, resBudgetDay, resExpensesMonth, resAdditionalIncome, resAdditionalExpenses, resIncomePeriod, resTargetMonth, salary, incomeTitle, incomeAmount, expensesTitle, expensesAmount, additionalExpenses, depositBankSelect, depositAmount, depositPercent, targetAmount, periodSelect, periodAmount, resBudgetMonth);
+
+console.log(resTargetMonth);
+
 let isNumber = function(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
@@ -12,7 +42,7 @@ let isString = function(n) {
 let money,
     start = function() {
         do {
-            money = prompt('Ваш месячный доход?', 20000); 
+            money = prompt('Ваш месячный доход?', '20000'); 
         } while (!isNumber(money));
     };
 
@@ -44,7 +74,7 @@ let appData = {
             } while (isString(itemIncom));
 
             do {
-                cashIncom = prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
+                cashIncom = prompt('Сколько в месяц вы на этом зарабатываете?', '10000');
             } while (!isNumber(cashIncom));
             
             appData.income[itemIncom] = cashIncom;
@@ -70,9 +100,9 @@ let appData = {
                 } while (isString(a));
 
                 do {
-                    b = prompt('Во сколько это обойдется?', 2000);
+                    b = prompt('Во сколько это обойдется?', '2000');
                 } while (!isNumber(b));
-            appData.expenses[a] = Number(b);
+            appData.expenses[a] = b;
         }
     },
 
@@ -110,11 +140,11 @@ let appData = {
     getInfoDeposit: function() {
         if (appData.deposit) {
             do {
-                appData.percentDeposit = +prompt('Какой годовой процент?', 10);
+                appData.percentDeposit = +prompt('Какой годовой процент?', '10');
             } while (!isNumber(appData.percentDeposit));
 
             do {
-                appData.moneyDeposit = +prompt('Какая сумма заложена', 10000);
+                appData.moneyDeposit = +prompt('Какая сумма заложена', '10000');
             } while (!isNumber(appData.moneyDeposit));
         }
     },
