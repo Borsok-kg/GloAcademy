@@ -5,7 +5,7 @@ let isNumber = function(n) {
 };
 
 let isString = function(n) {
-
+    return n === '' || n === null || !isNaN(n);
 };
 
 // Проверяем корректность ввода месячной суммы
@@ -41,37 +41,39 @@ let appData = {
 
             do {
                 itemIncom = prompt('Какой у вас дополнительный заработок?', 'Таксую');
-            } while (isNumber(itemIncom));
+            } while (isString(itemIncom));
 
             do {
-                cashIncom = +prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
+                cashIncom = prompt('Сколько в месяц вы на этом зарабатываете?', '10000');
             } while (!isNumber(cashIncom));
             
             appData.income[itemIncom] = cashIncom;
         }
 
         let addExpenses;
+        
+        do {
+            addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'интернет, такси, коммунальные расходы');
+            
+        } while (isString(addExpenses));
 
-            do {
-                addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'интернет, такси, коммунальные расходы');
-                appData.addExpenses = addExpenses.toLowerCase().split(', ');
-            } while (isNumber(addExpenses));
+        appData.addExpenses = addExpenses.toLowerCase().split(', ');
 
-            appData.deposit = confirm('Есть ли у вас депозит в банке?');
-            for (let i = 0; i < 2; i++) {
-                let a,
-                    b;
+        appData.deposit = confirm('Есть ли у вас депозит в банке?');
 
-                    do {
-                        a = prompt('Введите обязательную статью расходов?', 'На что?');
-                    } while (isNumber(a));
+        for (let i = 0; i < 2; i++) {
+            let a,
+                b;
 
-                    do {
-                        b = +prompt('Во сколько это обойдется?', '2000');
-                    } while (!isNumber(b));
-                appData.expenses[a] = b;
-            }
+                do {
+                    a = prompt('Введите обязательную статью расходов?', 'На что?');
+                } while (isString(a));
 
+                do {
+                    b = prompt('Во сколько это обойдется?', '2000');
+                } while (!isNumber(b));
+            appData.expenses[a] = b;
+        }
     },
 
     getExpensesMonth: function () {  
@@ -108,11 +110,11 @@ let appData = {
     getInfoDeposit: function() {
         if (appData.deposit) {
             do {
-                appData.percentDeposit = +prompt('Какой годовой процент?', 10);
+                appData.percentDeposit = +prompt('Какой годовой процент?', '10');
             } while (!isNumber(appData.percentDeposit));
 
             do {
-                appData.moneyDeposit = +prompt('Какая сумма заложена', 10000);
+                appData.moneyDeposit = +prompt('Какая сумма заложена', '10000');
             } while (!isNumber(appData.moneyDeposit));
         }
     },
@@ -121,8 +123,6 @@ let appData = {
         return appData.budgetMonth * appData.period;
     }
 };
-
-
 
 appData.asking();
 
